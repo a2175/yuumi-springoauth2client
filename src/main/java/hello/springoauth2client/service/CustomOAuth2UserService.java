@@ -1,5 +1,6 @@
 package hello.springoauth2client.service;
 
+import hello.springoauth2client.dto.CustomOAuth2User;
 import hello.springoauth2client.dto.GoogleResponse;
 import hello.springoauth2client.dto.NaverResponse;
 import hello.springoauth2client.dto.OAuth2Response;
@@ -31,7 +32,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return null;
         }
 
-        //추후 작성
-        return null;
+        String role = "ROLE_USER";
+
+        return new CustomOAuth2User(oAuth2Response, role);
     }
 }
