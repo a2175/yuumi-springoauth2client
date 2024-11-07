@@ -2,7 +2,7 @@ package hello.springoauth2client.dto;
 
 import java.util.Map;
 
-public class NaverResponse implements OAuth2Response {
+public class NaverResponse extends OAuth2Response {
 
     private final Map<String, Object> attributes;
 

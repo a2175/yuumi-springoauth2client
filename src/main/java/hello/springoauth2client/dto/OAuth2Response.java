@@ -1,16 +1,20 @@
 package hello.springoauth2client.dto;
 
-public interface OAuth2Response {
+public abstract class OAuth2Response {
 
     //제공자 (Ex. naver, google, ...)
-    String getProvider();
+    abstract public String getProvider();
 
     //제공자에서 발급해주는 아이디(번호)
-    String getProviderId();
+    abstract public String getProviderId();
 
     //이메일
-    String getEmail();
+    abstract public String getEmail();
 
     //사용자 실명 (설정한 이름)
-    String getName();
+    abstract public String getName();
+
+    public final String getUsername() {
+        return this.getProvider()+" "+this.getProviderId();
+    }
 }
