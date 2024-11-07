@@ -4,6 +4,9 @@ import hello.springoauth2client.dto.CustomOAuth2User;
 import hello.springoauth2client.dto.GoogleResponse;
 import hello.springoauth2client.dto.NaverResponse;
 import hello.springoauth2client.dto.OAuth2Response;
+import hello.springoauth2client.entity.User;
+import hello.springoauth2client.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -11,7 +14,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+
+    private final UserRepository userRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -32,7 +38,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return null;
         }
 
+        String username = oAuth2Response.getProvider()+" "+oAuth2Response.getProviderId();
+        User existUser = userRepository.findByUsername(username);
+
         String role = "ROLE_USER";
+        if (existUser == null) {
+
+            User user = new User();
+            user.setUsername(username);
+            user.setEmail(oAuth2Response.getEmail());
+            user.setRole(role);
+
+            userRepository.save(user);
+        }
+        else {
+            role = existUser.getRole();
+        }
 
         return new CustomOAuth2User(oAuth2Response, role);
     }
