@@ -1,9 +1,6 @@
 package hello.springoauth2client.service;
 
-import hello.springoauth2client.dto.CustomOAuth2User;
-import hello.springoauth2client.dto.GoogleResponse;
-import hello.springoauth2client.dto.NaverResponse;
-import hello.springoauth2client.dto.OAuth2Response;
+import hello.springoauth2client.dto.*;
 import hello.springoauth2client.entity.User;
 import hello.springoauth2client.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +29,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
         else if (registrationId.equals("google")) {
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
+        }
+        else if (registrationId.equals("discord")) {
+            oAuth2Response = new DiscordResponse(oAuth2User.getAttributes());
         }
         else {
 

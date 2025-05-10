@@ -39,4 +39,19 @@ public class SocialClientRegistration {
                 .userNameAttributeName(IdTokenClaimNames.SUB)
                 .build();
     }
+
+    public ClientRegistration discordClientRegistration() {
+
+        return ClientRegistration.withRegistrationId("discord")
+                .clientId("")
+                .clientSecret("")
+                .redirectUri("http://localhost:8080/login/oauth2/code/discord")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .scope("identify", "email")
+                .authorizationUri("https://discord.com/oauth2/authorize")
+                .tokenUri("https://discord.com/api/oauth2/token")
+                .userInfoUri("https://discord.com/api/users/@me")
+                .userNameAttributeName("id")
+                .build();
+    }
 }
